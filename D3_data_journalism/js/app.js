@@ -41,7 +41,7 @@ var margin = {
     heathcareData.forEach(function(data) {
         data.poverty = +data.poverty;
         data.povertyMoe = +data.povertyMoe;
-        data.age = +date.age;
+        data.age = +data.age;
         data.ageMoe = +data.ageMoe;
         data.income = +data.income;
         data.incomeMoe = +data.incomeMoe;
@@ -50,6 +50,6 @@ var margin = {
         data.smokes = +data.smokes;
     });
 
-  })
+  });
 
 
