@@ -37,10 +37,18 @@ var margin = {
   .then(function(heathcareData, err) {
       if(err) throw err;
       console.log()
-      
-    heathcareData.forEach(function(data) {
 
-    })
+    heathcareData.forEach(function(data) {
+        data.poverty = +data.poverty;
+        data.povertyMoe = +data.povertyMoe;
+        data.age = +date.age;
+        data.ageMoe = +data.ageMoe;
+        data.income = +data.income;
+        data.incomeMoe = +data.incomeMoe;
+        data.noHealthInsurance = +data.noHealthInsurance;
+        data.obesity = +data.obesity;
+        data.smokes = +data.smokes;
+    });
 
   })
 
