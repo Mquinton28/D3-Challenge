@@ -57,7 +57,7 @@ var margin = {
 
   // Create y scale function
   var yLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(heathcareData d => d.poverty)])
+    .domain([d3.min(healthcareData, d => d.noHealthInsurance)-1, d3.max(heathcareData, d => d.noHealthInsurance)])
     .range([height, 0]);
 
   // Create initial axis functions
@@ -73,6 +73,17 @@ var margin = {
   // append y axis
   chartGroup.append("g")
     .call(leftAxis);
+
+// Create circles for the chart groups
+var circlesGroup = chartGroup.selectAll("circle")
+    .data(heathcareData)
+    .enter()
+    .append("circle")
+    .attr("cx", d => xLinearScale(d.poverty))
+    .attr("cy", d => yLinearScale(d.noHealthInsurance))
+    .attr("r", 20)
+    .attr("fill", "green")
+    .attr("opacity", ".5");
 
   });
 
