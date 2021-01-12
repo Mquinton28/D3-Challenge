@@ -8,7 +8,7 @@
 // Create and situate your axes and labels to the left and bottom of the chart.
 
 
-// Note: You'll need to use python -m http.server to run the visualization. This will host the page at localhost:8000 in your web browser.
+// Note: You'll need to use python -m http.server to run the visualization. This will host the page at localhost:8000 in your web browser. 
 var svgWidth = 960;
 var svgHeight = 500;
 
@@ -49,6 +49,30 @@ var margin = {
         data.obesity = +data.obesity;
         data.smokes = +data.smokes;
     });
+
+    // xLinearScale function above csv import
+  var xLinearScale = d3.scaleLinear()
+    .domain([d3.min(healthcareData, d => d.poverty)-1, d3.max(healthcareData, d => d.poverty)])
+    .range([0, width]);
+
+  // Create y scale function
+  var yLinearScale = d3.scaleLinear()
+    .domain([0, d3.max(heathcareData d => d.poverty)])
+    .range([height, 0]);
+
+  // Create initial axis functions
+  var bottomAxis = d3.axisBottom(xLinearScale);
+  var leftAxis = d3.axisLeft(yLinearScale);
+
+  // append x axis
+  var xAxis = chartGroup.append("g")
+    .classed("x-axis", true)
+    .attr("transform", `translate(0, ${height})`)
+    .call(bottomAxis);
+
+  // append y axis
+  chartGroup.append("g")
+    .call(leftAxis);
 
   });
 
