@@ -1,13 +1,3 @@
-// You need to create a scatter plot between two of the data variables such as Healthcare vs. Poverty or Smokers vs. Age.
-// Using the D3 techniques we taught you in class, create a scatter plot that represents each state with circle elements. You'll code this graphic in the app.js file of your homework directory—make sure you pull in the data from data.csv by using the d3.csv function. Your scatter plot should ultimately appear like the image at the top of this section.
-
-
-// Include state abbreviations in the circles.
-
-
-// Create and situate your axes and labels to the left and bottom of the chart.
-
-
 // Note: You'll need to use python -m http.server to run the visualization. This will host the page at localhost:8000 in your web browser. 
 var svgWidth = 960;
 var svgHeight = 500;
@@ -94,13 +84,38 @@ var labelGroup = chartGroup.selectAll('label')
     .attr('font-weight', 'bold')
     .attr("x", d => xLinearScale(d.poverty)-7)
     .attr("y", d => yLinearScale(d.noHealthInsurance)+4)
-    .attr("fill", "white")
+    .attr("fill", "white");
 
+function updateToolTip(chosenXAxis, circlesGroup) {
+  var label;
 
-
-    var labelsGroup = chartGroup.append("g")
-    .attr("transform", `translate(${width / 2}, ${height + 20})`);
-
+  var toolTip = d3.tip()
+  .attr('class', 'tooltip')
+  .offset([80, -60])
+  .html(function(d) {
+    return (`${d.abbr}<br>${d.poverty}<br>${d.noHealthInsurance}`);
   });
 
+circlesGroup.call(toolTip);
 
+labelGroup.on('mouseover', function(data) {
+  toolTip.show(data, this);
+})
+
+  .on('mouseout', function(data, index) {
+    toolTip.hide(data, this);
+  });
+  
+  chartGroup.append('text')
+  .attr('transform', 'rotate(-90)')
+  .attr('y', 0 - margin.left + 40)
+  .attr('x', 0 - (height / 2))
+  .attr('dy', '1em')
+  .attr('class', 'axisText')
+  .text('Does not have Healthcare (%)');
+
+  chartGroup.append('text')
+  .attr("transform", `translate(${width / 2}, ${height + margin.top + 20})`)
+  .attr('class', 'axisText')
+  .text('% of population in poverty');
+});
