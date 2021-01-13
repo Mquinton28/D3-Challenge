@@ -65,8 +65,8 @@ var margin = {
   var leftAxis = d3.axisLeft(yLinearScale);
 
   // append x axis
-  var xAxis = chartGroup.append("g")
-    .classed("x-axis", true)
+chartGroup.append("g")
+    // .classed("x-axis", true)
     .attr("transform", `translate(0, ${height})`)
     .call(bottomAxis);
 
@@ -85,22 +85,21 @@ var circlesGroup = chartGroup.selectAll("circle")
     .attr("fill", "green")
     .attr("opacity", ".5");
 
+var labelGroup = chartGroup.selectAll('label')
+    .data(healthcareData)
+    .enter()
+    .append("text")
+    .text(d => d.abbr)
+    .attr('font-size',10)
+    .attr('font-weight', 'bold')
+    .attr("x", d => xLinearScale(d.poverty)-7)
+    .attr("y", d => yLinearScale(d.noHealthInsurance)+4)
+    .attr("fill", "white")
+
+
+
     var labelsGroup = chartGroup.append("g")
     .attr("transform", `translate(${width / 2}, ${height + 20})`);
-
-  var healthcareLabel = labelsGroup.append("text")
-    .attr("x", 0)
-    .attr("y", 20)
-    .attr("value", "poverty") // value to grab for event listener
-    .classed("active", true)
-    .text("Health Care compared to Poverty");
-
-  var insuranceLabel = labelsGroup.append("text")
-    .attr("x", 0)
-    .attr("y", 40)
-    .attr("value", "noHealthInsurance") // value to grab for event listener
-    .classed("inactive", true)
-    .text("No Health Insurance");
 
   });
 
