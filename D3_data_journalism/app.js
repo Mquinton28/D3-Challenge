@@ -140,8 +140,19 @@ console.log(healthcareData);
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
     .attr("cy", d => yLinearScale(d.healthcare))
     .attr("r", 20)
-    .attr("fill", "pink")
+    .attr('class', 'stateCircle')
     .attr("opacity", ".5");
+
+    var stateAbbrGroup = chartGroup.selectAll("stateText")
+    .data(healthcareData)
+    .enter()
+    .append("stateText")
+    .attr("x", function(d) { return d.poverty; })
+    .attr("y", function(d) { return d.healthcare; })
+    .text(function(d) { return d.abbr; })
+    .attr("font-family", "sans-serif")
+    .attr("font-size", "5px")
+    .attr("fill", "black");
 
   // Create group for two x-axis labels
   var labelsGroup = chartGroup.append("g")
@@ -199,7 +210,7 @@ console.log(healthcareData);
         circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
         // changes classes to change bold text
-        if (chosenXAxis === "no_healthinsurance") {
+        if (chosenXAxis === "healthcare") {
           povertyLabel
             .classed("active", true)
             .classed("inactive", false);
